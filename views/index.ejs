@@ -1,0 +1,140 @@
+<%- include("partials/head", { title }) %>
+<main class="kiosk-shell container-fluid min-vh-100 p-3 p-xl-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center gap-3">
+      <img src="/images/iwatar-logo.png" class="kiosk-logo" alt="IWATAR logo">
+      <div>
+      <h1 class="h4 fw-bold mb-0">IWATAR Student Information and Monitoring System</h1>
+      <span class="text-secondary">Local classroom kiosk display</span>
+      </div>
+    </div>
+    <span class="badge text-bg-primary fs-6"><i class="bi bi-wifi me-1"></i>Local Network</span>
+  </div>
+
+  <section class="card border-0 shadow-sm mb-3">
+    <div class="card-body py-3">
+      <div class="d-flex gap-3 align-items-center">
+        <span class="badge text-bg-info"><i class="bi bi-megaphone-fill me-1"></i>Today</span>
+        <div class="announcement-strip flex-grow-1">
+          <% if (announcements.length) { %>
+            <% announcements.forEach((item) => { %>
+              <strong><%= item.title %>:</strong> <%= item.body %>
+            <% }) %>
+          <% } else { %>
+            No announcements for today.
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="row g-3 kiosk-grid">
+    <aside class="col-lg-3">
+      <div class="card h-100 border-0 shadow-sm student-panel">
+        <div class="card-body text-center">
+          <img src="<%= student ? student.photo : '/images/student-placeholder.svg' %>" class="student-photo mb-3" alt="Student photo">
+          <h2 class="h4 fw-bold mb-1"><%= student ? `${student.first_name} ${student.last_name}` : "No student selected" %></h2>
+          <div class="text-secondary mb-3">LRN: <%= student ? student.lrn : "-----" %></div>
+          <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <span class="badge text-bg-primary"><%= student ? student.grade_level : "Grade" %></span>
+            <span class="badge text-bg-light border"><%= student ? student.section : "Section" %></span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="col-lg-6">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <h2 class="h5 fw-bold mb-0"><i class="bi bi-person-vcard me-2 text-primary"></i>Student Information</h2>
+            <span class="badge text-bg-success">Ready for scan</span>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <div class="info-tile">
+                <span>Guardian</span>
+                <strong><%= student ? student.guardian_name : "N/A" %></strong>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="info-tile">
+                <span>Contact</span>
+                <strong><%= student ? student.contact_number : "N/A" %></strong>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="info-tile">
+                <span>Address</span>
+                <strong><%= student ? student.address : "N/A" %></strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="scan-card border-primary">
+                <i class="bi bi-fingerprint"></i>
+                <div>
+                  <span>Fingerprint Scan</span>
+                  <strong id="fingerprintStatus">Waiting for finger</strong>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="scan-card border-info">
+                <i class="bi bi-thermometer-half"></i>
+                <div>
+                  <span>Temperature Scan</span>
+                  <strong id="temperatureStatus">Waiting for scan</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="col-lg-3">
+      <div class="d-grid gap-3 h-100">
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-white fw-bold"><i class="bi bi-calendar-event me-2 text-primary"></i>Today Schedule</div>
+          <div class="list-group list-group-flush">
+            <% if (schedules.length) { %>
+              <% schedules.forEach((schedule) => { %>
+                <div class="list-group-item">
+                  <div class="fw-semibold"><%= schedule.subject %></div>
+                  <small class="text-secondary"><%= schedule.start_time %> - <%= schedule.end_time %> | <%= schedule.room %></small>
+                </div>
+              <% }) %>
+            <% } else { %>
+              <div class="list-group-item text-secondary">No schedule today.</div>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="card border-0 shadow-sm">
+          <div class="card-header bg-white fw-bold"><i class="bi bi-clock-history me-2 text-primary"></i>Recent Logs</div>
+          <div class="list-group list-group-flush recent-log-list">
+            <% logs.forEach((log) => { %>
+              <div class="list-group-item d-flex justify-content-between gap-2">
+                <span><%= log.first_name || "Unknown" %> <%= log.last_name || "" %></span>
+                <span class="badge <%= log.status === 'flagged' ? 'text-bg-danger' : 'text-bg-success' %>"><%= log.status %></span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <span class="text-secondary"><i class="bi bi-shield-check me-1"></i>Local-only prototype. No QR scanning.</span>
+    <a href="/admin/login" class="btn btn-primary"><i class="bi bi-lock-fill me-2"></i>Admin Login</a>
+  </div>
+</main>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>

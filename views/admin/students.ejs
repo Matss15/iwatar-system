@@ -1,0 +1,39 @@
+<%- include("../partials/head", { title }) %>
+<div class="admin-layout">
+  <%- include("../partials/admin-sidebar") %>
+  <main class="admin-main p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3 fw-bold mb-0">Manage Students</h1>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentModal"><i class="bi bi-plus-lg me-2"></i>Add Student</button>
+    </div>
+    <div class="alert alert-info"><i class="bi bi-info-circle me-2"></i>Use image paths like <code>/images/student-placeholder.svg</code> for this local prototype.</div>
+    <div class="card border-0 shadow-sm">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead><tr><th>Photo</th><th>Name</th><th>LRN</th><th>Grade / Section</th><th>Guardian</th><th class="text-end">Actions</th></tr></thead>
+          <tbody>
+            <% students.forEach((student) => { %>
+              <tr>
+                <td><img src="<%= student.photo %>" class="table-photo" alt=""></td>
+                <td><strong><%= student.first_name %> <%= student.last_name %></strong><br><small class="text-secondary"><%= student.contact_number || "" %></small></td>
+                <td><%= student.lrn %></td>
+                <td><%= student.grade_level %> - <%= student.section %></td>
+                <td><%= student.guardian_name || "-" %></td>
+                <td class="text-end">
+                  <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editStudent<%= student.id %>"><i class="bi bi-pencil"></i></button>
+                  <form action="/admin/students/<%= student.id %>/delete" method="post" class="d-inline"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <%- include("student-form", { modalId: "studentModal", student: null }) %>
+    <% students.forEach((student) => { %>
+      <%- include("student-form", { modalId: `editStudent${student.id}`, student }) %>
+    <% }) %>
+  </main>
+</div>
+<%- include("../partials/scripts") %>

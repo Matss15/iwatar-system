@@ -1,0 +1,12 @@
+<div class="modal fade" id="<%= modalId %>" tabindex="-1"><div class="modal-dialog"><form class="modal-content" action="/admin/admins/save" method="post">
+  <div class="modal-header"><h5 class="modal-title"><%= item ? "Edit Admin" : "Add Admin" %></h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+  <div class="modal-body">
+    <% if (item) { %><input type="hidden" name="id" value="<%= item.id %>"><% } %>
+    <label class="form-label">Username</label><input class="form-control mb-3" name="username" value="<%= item ? item.username : "" %>" required>
+    <label class="form-label">Full Name</label><input class="form-control mb-3" name="full_name" value="<%= item ? item.full_name : "" %>" required>
+    <label class="form-label">Google Email</label><input class="form-control mb-3" name="google_email" type="email" value="<%= item && item.google_email ? item.google_email : "" %>" placeholder="name@example.com">
+    <label class="form-label">Role</label><input class="form-control mb-3" name="role" value="<%= item ? item.role : "Admin" %>">
+    <label class="form-label">Password</label><input class="form-control" name="password" type="password" placeholder="<%= item ? "Leave blank to keep current password" : "" %>" <%= item ? "" : "required" %>>
+  </div>
+  <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Save</button></div>
+</form></div></div>

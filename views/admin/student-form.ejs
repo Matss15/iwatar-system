@@ -1,0 +1,35 @@
+<div class="modal fade" id="<%= modalId %>" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <form class="modal-content" action="/admin/students/save" method="post" enctype="multipart/form-data">
+      <div class="modal-header">
+        <h5 class="modal-title"><%= student ? "Edit Student" : "Add Student" %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <% if (student) { %>
+          <input type="hidden" name="id" value="<%= student.id %>">
+          <input type="hidden" name="current_photo" value="<%= student.photo %>">
+        <% } %>
+        <div class="col-md-4"><label class="form-label">LRN</label><input class="form-control" name="lrn" value="<%= student ? student.lrn : "" %>" required></div>
+        <div class="col-md-4"><label class="form-label">First Name</label><input class="form-control" name="first_name" value="<%= student ? student.first_name : "" %>" required></div>
+        <div class="col-md-4"><label class="form-label">Last Name</label><input class="form-control" name="last_name" value="<%= student ? student.last_name : "" %>" required></div>
+        <div class="col-md-3"><label class="form-label">Grade</label><input class="form-control" name="grade_level" value="<%= student ? student.grade_level : "" %>"></div>
+        <div class="col-md-3"><label class="form-label">Section</label><input class="form-control" name="section" value="<%= student ? student.section : "" %>"></div>
+        <div class="col-md-6">
+          <label class="form-label">Student Photo</label>
+          <input class="form-control" name="student_photo" type="file" accept="image/*">
+          <div class="form-text">Upload JPG, PNG, or another image file. Max 5 MB.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Current Photo Path</label>
+          <input class="form-control" name="photo" value="<%= student ? student.photo : "/images/student-placeholder.svg" %>" readonly>
+        </div>
+        <div class="col-md-6"><label class="form-label">Fingerprint ID</label><input class="form-control" name="fingerprint_id" value="<%= student ? student.fingerprint_id || "" : "" %>"></div>
+        <div class="col-md-6"><label class="form-label">Guardian</label><input class="form-control" name="guardian_name" value="<%= student ? student.guardian_name || "" : "" %>"></div>
+        <div class="col-md-6"><label class="form-label">Contact Number</label><input class="form-control" name="contact_number" value="<%= student ? student.contact_number || "" : "" %>"></div>
+        <div class="col-12"><label class="form-label">Address</label><textarea class="form-control" name="address"><%= student ? student.address || "" : "" %></textarea></div>
+      </div>
+      <div class="modal-footer"><button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button><button class="btn btn-primary">Save</button></div>
+    </form>
+  </div>
+</div>

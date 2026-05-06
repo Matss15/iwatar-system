@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="Student placeholder">
+  <rect width="400" height="400" fill="#eaf2ff"/>
+  <circle cx="200" cy="145" r="70" fill="#0d6efd"/>
+  <path d="M80 350c18-72 64-110 120-110s102 38 120 110" fill="#0b2f66"/>
+  <text x="200" y="382" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#0b2f66">IWATAR</text>
+</svg>

@@ -1,0 +1,40 @@
+<%- include("../partials/head", { title }) %>
+<div class="admin-layout">
+  <%- include("../partials/admin-sidebar") %>
+  <main class="admin-main p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="h3 fw-bold mb-0">Dashboard</h1>
+        <span class="text-secondary">Welcome, <%= admin.full_name || admin.username %></span>
+      </div>
+      <a class="btn btn-outline-primary" href="/"><i class="bi bi-display me-2"></i>Open Kiosk</a>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4"><div class="card metric-card border-0 shadow-sm"><div class="card-body"><span>Students</span><strong><%= counts.students %></strong><i class="bi bi-people"></i></div></div></div>
+      <div class="col-md-4"><div class="card metric-card border-0 shadow-sm"><div class="card-body"><span>Scans Today</span><strong><%= counts.todayLogs %></strong><i class="bi bi-fingerprint"></i></div></div></div>
+      <div class="col-md-4"><div class="card metric-card border-0 shadow-sm"><div class="card-body"><span>Flagged Logs</span><strong><%= counts.flagged %></strong><i class="bi bi-exclamation-triangle"></i></div></div></div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white fw-bold">Latest Attendance / Scan Logs</div>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead><tr><th>Student</th><th>Type</th><th>Temperature</th><th>Status</th><th>Time</th></tr></thead>
+          <tbody>
+            <% logs.forEach((log) => { %>
+              <tr>
+                <td><%= log.first_name || "Unknown" %> <%= log.last_name || "" %></td>
+                <td><span class="badge text-bg-light border"><%= log.scan_type %></span></td>
+                <td><%= log.temperature_c || "-" %></td>
+                <td><span class="badge <%= log.status === 'flagged' ? 'text-bg-danger' : 'text-bg-success' %>"><%= log.status %></span></td>
+                <td><%= log.scanned_at.toLocaleString ? log.scanned_at.toLocaleString() : log.scanned_at %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include("../partials/scripts") %>

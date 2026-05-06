@@ -1,0 +1,22 @@
+{
+  "watch": [
+    ".env",
+    "server.js",
+    "config",
+    "controllers",
+    "database",
+    "models",
+    "routes",
+    "utils",
+    "views",
+    "public"
+  ],
+  "ext": "js,json,ejs,css,env",
+  "ignore": [
+    "node_modules",
+    "public/uploads",
+    "server.out.log",
+    "server.err.log"
+  ],
+  "delay": "300ms"
+}

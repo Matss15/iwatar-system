@@ -1,0 +1,13 @@
+<%- include("../partials/head", { title }) %>
+<div class="admin-layout"><%- include("../partials/admin-sidebar") %>
+  <main class="admin-main p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4"><h1 class="h3 fw-bold mb-0">Manage Admin Account</h1><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#adminModal"><i class="bi bi-plus-lg me-2"></i>Add Admin</button></div>
+    <div class="alert alert-warning"><i class="bi bi-exclamation-triangle me-2"></i>Prototype only: sample passwords are stored in readable form to keep the beginner code simple.</div>
+    <div class="card border-0 shadow-sm"><div class="table-responsive"><table class="table table-hover align-middle mb-0">
+      <thead><tr><th>Username</th><th>Full Name</th><th>Google Email</th><th>2FA</th><th>Role</th><th>Created</th><th class="text-end">Actions</th></tr></thead>
+      <tbody><% admins.forEach((item) => { %><tr><td><strong><%= item.username %></strong></td><td><%= item.full_name %></td><td><%= item.google_email || "Not linked" %></td><td><span class="badge <%= item.otp_enabled ? "text-bg-success" : "text-bg-secondary" %>"><%= item.otp_enabled ? "Enabled" : "Pending" %></span></td><td><span class="badge text-bg-primary"><%= item.role %></span></td><td><%= item.created_at.toLocaleDateString ? item.created_at.toLocaleDateString() : item.created_at %></td><td class="text-end"><button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editAdmin<%= item.id %>"><i class="bi bi-pencil"></i></button> <form action="/admin/admins/<%= item.id %>/delete" method="post" class="d-inline"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr><% }) %></tbody>
+    </table></div></div>
+    <%- include("admin-form", { modalId: "adminModal", item: null }) %>
+    <% admins.forEach((item) => { %><%- include("admin-form", { modalId: `editAdmin${item.id}`, item }) %><% }) %>
+  </main>
+</div><%- include("../partials/scripts") %>
