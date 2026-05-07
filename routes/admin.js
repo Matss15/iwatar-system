@@ -28,6 +28,8 @@ router.post("/schedules/save", adminController.saveSchedule);
 router.post("/schedules/:id/delete", adminController.deleteSchedule);
 
 router.get("/logs", adminController.logsPage);
+router.post("/logs/report-settings", adminController.saveReportSettings);
+router.post("/logs/send-report", adminController.sendAttendanceReport);
 
 router.get("/admins", adminController.adminsPage);
 router.post("/admins/save", adminController.saveAdmin);

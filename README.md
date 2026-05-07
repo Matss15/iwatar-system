@@ -73,6 +73,27 @@ After the username and password are accepted, the admin login asks for a 6-digit
 
 On the first successful password login, the app shows a setup key. Open Google Authenticator, choose **Add a code**, choose **Enter a setup key**, enter the setup key, then submit the generated 6-digit code. Future logins will ask for the OTP code only.
 
+## Gmail Attendance PDF Reports
+
+The admin scan logs page can send attendance summary reports as PDF attachments to teacher email addresses. It supports manual sending and daily automatic sending.
+
+Add these values to `.env`:
+
+```text
+GMAIL_SMTP_USER=your-gmail-address@gmail.com
+GMAIL_SMTP_APP_PASSWORD=your-16-character-gmail-app-password
+```
+
+Use a Gmail app password, not your normal Gmail password. In Gmail, enable 2-Step Verification, then create an app password for this local system.
+
+Open:
+
+```text
+http://localhost:3000/admin/logs
+```
+
+Enter teacher email addresses, save the report settings, then click **Send PDF Report**. To enable automatic daily sending, check **Send automatically every day** and set the time.
+
 ## Local Network Tablet Access
 
 On the server laptop, find the local IP address using:

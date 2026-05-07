@@ -13,6 +13,7 @@ const announcementsRoutes = require("./routes/announcements");
 const schedulesRoutes = require("./routes/schedules");
 const kioskController = require("./controllers/kioskController");
 const { testConnection } = require("./database/db");
+const { startAutoReportScheduler } = require("./services/reportService");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -70,4 +71,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`IWATAR backend running at http://localhost:${PORT}`);
+  startAutoReportScheduler();
 });

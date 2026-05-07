@@ -1,1 +1,0 @@
-SOURCE ../database.sql;

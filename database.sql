@@ -5,6 +5,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS scan_logs;
 DROP TABLE IF EXISTS attendance;
+DROP TABLE IF EXISTS report_settings;
 DROP TABLE IF EXISTS schedules;
 DROP TABLE IF EXISTS announcements;
 DROP TABLE IF EXISTS students;
@@ -75,6 +76,15 @@ CREATE TABLE scan_logs (
     ON DELETE SET NULL
 );
 
+CREATE TABLE report_settings (
+  id INT PRIMARY KEY,
+  recipients TEXT,
+  auto_enabled TINYINT(1) NOT NULL DEFAULT 0,
+  send_time CHAR(5) NOT NULL DEFAULT '17:00',
+  last_auto_sent_date DATE,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 INSERT INTO admins (username, password_hash, full_name, role) VALUES
 ('admin', 'admin123', 'System Administrator', 'Admin');
 
@@ -95,3 +105,6 @@ INSERT INTO scan_logs (student_id, scan_type, temperature_c, status, message) VA
 (1, 'fingerprint', 36.6, 'present', 'Fingerprint verified'),
 (1, 'temperature', 36.6, 'normal', 'Temperature normal'),
 (2, 'fingerprint', 37.8, 'flagged', 'Temperature requires attention');
+
+INSERT INTO report_settings (id, recipients, auto_enabled, send_time) VALUES
+(1, '', 0, '17:00');

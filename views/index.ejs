@@ -1,6 +1,6 @@
 <%- include("partials/head", { title }) %>
 <main class="kiosk-shell container-fluid min-vh-100 p-3 p-xl-4">
-  <div class="d-flex align-items-center justify-content-between mb-3">
+  <div class="kiosk-header d-flex align-items-center justify-content-between mb-3">
     <div class="d-flex align-items-center gap-3">
       <img src="/images/iwatar-logo.png" class="kiosk-logo" alt="IWATAR logo">
       <div>
@@ -11,10 +11,10 @@
     <span class="badge text-bg-primary fs-6"><i class="bi bi-wifi me-1"></i>Local Network</span>
   </div>
 
-  <section class="card border-0 shadow-sm mb-3">
+  <section class="announcement-card card border-0 shadow-sm mb-3">
     <div class="card-body py-3">
       <div class="d-flex gap-3 align-items-center">
-        <span class="badge text-bg-info"><i class="bi bi-megaphone-fill me-1"></i>Today</span>
+        <span class="announcement-badge badge"><i class="bi bi-megaphone-fill me-1"></i>Today</span>
         <div class="announcement-strip flex-grow-1">
           <% if (announcements.length) { %>
             <% announcements.forEach((item) => { %>

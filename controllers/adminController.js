@@ -5,6 +5,8 @@ const Announcement = require("../models/announcementModel");
 const Schedule = require("../models/scheduleModel");
 const ScanLog = require("../models/scanLogModel");
 const Admin = require("../models/adminModel");
+const ReportSettings = require("../models/reportSettingsModel");
+const ReportService = require("../services/reportService");
 const Totp = require("../utils/totp");
 
 const GOOGLE_OAUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -336,14 +338,50 @@ async function deleteSchedule(req, res, next) {
 
 async function logsPage(req, res, next) {
   try {
+    const reportSettings = await ReportSettings.get();
     res.render("admin/logs", {
       title: "Attendance / Scan Logs",
       admin: req.session.admin,
       logs: await ScanLog.getAll(),
+      reportSettings,
+      reportDate: ReportService.formatDate(),
+      reportMessage: req.session.reportMessage || null,
+      reportError: req.session.reportError || null,
     });
+    delete req.session.reportMessage;
+    delete req.session.reportError;
   } catch (error) {
     next(error);
   }
+}
+
+async function saveReportSettings(req, res, next) {
+  try {
+    await ReportSettings.update({
+      recipients: req.body.recipients,
+      auto_enabled: req.body.auto_enabled === "on",
+      send_time: req.body.send_time,
+    });
+    req.session.reportMessage = "Report settings saved.";
+    res.redirect("/admin/logs");
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function sendAttendanceReport(req, res) {
+  try {
+    const settings = await ReportSettings.get();
+    const result = await ReportService.sendAttendanceReport({
+      recipients: req.body.recipients || settings.recipients,
+      reportDate: req.body.report_date,
+    });
+    req.session.reportMessage = `PDF report sent to ${result.recipientCount} email address(es). Logs included: ${result.logCount}.`;
+  } catch (error) {
+    req.session.reportError = error.message;
+  }
+
+  res.redirect("/admin/logs");
 }
 
 async function adminsPage(req, res, next) {
@@ -405,6 +443,8 @@ module.exports = {
   saveSchedule,
   deleteSchedule,
   logsPage,
+  saveReportSettings,
+  sendAttendanceReport,
   adminsPage,
   saveAdmin,
   deleteAdmin,

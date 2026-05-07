@@ -1,18 +1,38 @@
 :root {
-  --iwatar-blue: #0d6efd;
-  --iwatar-navy: #0b2f66;
-  --iwatar-bg: #f4f7fb;
-  --iwatar-soft: #eaf2ff;
+  --iwatar-blue: #d71920;
+  --iwatar-navy: #2f353b;
+  --iwatar-bg: #f2f2f2;
+  --iwatar-soft: #fff0f1;
+  --bs-primary: #d71920;
+  --bs-primary-rgb: 215, 25, 32;
+  --bs-info: #f59e0b;
+  --bs-info-rgb: 245, 158, 11;
+  --bs-link-color: #b51218;
+  --bs-link-hover-color: #8f0e13;
+  --bs-border-radius: 0.5rem;
 }
 
 body {
   background: var(--iwatar-bg);
-  color: #152238;
+  color: #202428;
 }
 
 .kiosk-shell {
   background:
-    linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
+}
+
+.kiosk-header {
+  background: linear-gradient(90deg, #2f353b 0%, #2f353b 58%, #d71920 100%);
+  color: #fff;
+  border-radius: 8px;
+  padding: 14px 16px;
+  box-shadow: 0 0.75rem 1.75rem rgba(47, 53, 59, 0.16);
+  border-bottom: 4px solid #d71920;
+}
+
+.kiosk-header .text-secondary {
+  color: rgba(255, 255, 255, 0.74) !important;
 }
 
 .kiosk-grid {
@@ -32,23 +52,46 @@ body {
   width: 72px;
   height: 72px;
   object-fit: cover;
-  border-radius: 14px;
-  box-shadow: 0 0.5rem 1.25rem rgba(13, 110, 253, 0.18);
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 0.5rem 1.25rem rgba(215, 25, 32, 0.2);
 }
 
 .student-panel {
-  background: linear-gradient(180deg, #ffffff, #edf5ff);
+  background: linear-gradient(180deg, #ffffff, #fff1f2);
+}
+
+.announcement-card {
+  border-left: 7px solid #d71920 !important;
+  background: linear-gradient(90deg, #fff0f1 0%, #ffffff 48%, #fff8f8 100%);
+  box-shadow: 0 0.75rem 1.6rem rgba(215, 25, 32, 0.16) !important;
 }
 
 .announcement-strip {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #111;
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.announcement-strip strong {
+  color: #b51218;
+  text-transform: uppercase;
+}
+
+.announcement-badge {
+  background: #d71920;
+  color: #fff;
+  font-size: 0.95rem;
+  padding: 0.55rem 0.8rem;
+  box-shadow: 0 0.4rem 1rem rgba(215, 25, 32, 0.25);
 }
 
 .info-tile {
-  background: #f8fbff;
-  border: 1px solid #dce9fb;
+  background: #fffafa;
+  border: 1px solid #f3d4d6;
   border-radius: 8px;
   padding: 16px;
 }
@@ -74,7 +117,7 @@ body {
   border-radius: 8px;
   padding: 16px;
   background: #fff;
-  box-shadow: 0 0.5rem 1rem rgba(13, 110, 253, 0.08);
+  box-shadow: 0 0.5rem 1rem rgba(215, 25, 32, 0.08);
 }
 
 .scan-card i {
@@ -88,7 +131,7 @@ body {
 }
 
 .login-page {
-  background: linear-gradient(135deg, #eaf2ff, #ffffff);
+  background: linear-gradient(135deg, #fff0f1, #ffffff);
 }
 
 .login-card {
@@ -101,7 +144,7 @@ body {
   height: 120px;
   object-fit: cover;
   border-radius: 18px;
-  box-shadow: 0 1rem 2rem rgba(13, 110, 253, 0.2);
+  box-shadow: 0 1rem 2rem rgba(215, 25, 32, 0.22);
 }
 
 .login-divider {
@@ -125,9 +168,9 @@ body {
 
 .otp-secret {
   overflow-wrap: anywhere;
-  border: 1px solid #cfe2ff;
+  border: 1px solid #f2c4c7;
   border-radius: 8px;
-  background: #f8fbff;
+  background: #fffafa;
   padding: 12px;
   color: var(--iwatar-navy);
   font-family: monospace;
@@ -151,7 +194,7 @@ body {
   top: 0;
   width: 260px;
   min-height: 100vh;
-  background: linear-gradient(180deg, var(--iwatar-navy), #0d6efd);
+  background: linear-gradient(180deg, #2f353b, #d71920);
 }
 
 .sidebar-logo {
@@ -194,8 +237,48 @@ body {
   position: absolute;
   right: 22px;
   bottom: 18px;
-  color: rgba(13, 110, 253, 0.18);
+  color: rgba(215, 25, 32, 0.18);
   font-size: 3rem;
+}
+
+.btn-primary {
+  --bs-btn-bg: #d71920;
+  --bs-btn-border-color: #d71920;
+  --bs-btn-hover-bg: #b51218;
+  --bs-btn-hover-border-color: #b51218;
+  --bs-btn-active-bg: #8f0e13;
+  --bs-btn-active-border-color: #8f0e13;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: #d71920;
+  --bs-btn-border-color: #d71920;
+  --bs-btn-hover-bg: #d71920;
+  --bs-btn-hover-border-color: #d71920;
+  --bs-btn-active-bg: #b51218;
+  --bs-btn-active-border-color: #b51218;
+}
+
+.text-primary {
+  color: #d71920 !important;
+}
+
+.border-primary {
+  border-color: #d71920 !important;
+}
+
+.border-info {
+  border-color: #f59e0b !important;
+}
+
+.text-bg-primary {
+  background-color: #d71920 !important;
+  color: #fff !important;
+}
+
+.text-bg-info {
+  background-color: #f59e0b !important;
+  color: #111 !important;
 }
 
 .table-photo {

@@ -14,9 +14,7 @@
   "ext": "js,json,ejs,css,env",
   "ignore": [
     "node_modules",
-    "public/uploads",
-    "server.out.log",
-    "server.err.log"
+    "public/uploads"
   ],
   "delay": "300ms"
 }
