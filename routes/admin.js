@@ -15,8 +15,12 @@ router.use(adminController.requireAdmin);
 router.get("/", (req, res) => res.redirect("/admin/dashboard"));
 router.get("/dashboard", adminController.dashboard);
 
+router.post("/fingerprint/enroll", adminController.enrollFingerprintForForm);
+
 router.get("/students", adminController.studentsPage);
+router.get("/students/register", adminController.studentRegistrationPage);
 router.post("/students/save", uploadStudentPhoto.single("student_photo"), adminController.saveStudent);
+router.post("/students/:id/enroll-fingerprint", adminController.enrollStudentFingerprint);
 router.post("/students/:id/delete", adminController.deleteStudent);
 
 router.get("/announcements", adminController.announcementsPage);

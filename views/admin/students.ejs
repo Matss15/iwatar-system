@@ -3,10 +3,15 @@
   <%- include("../partials/admin-sidebar") %>
   <main class="admin-main p-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="h3 fw-bold mb-0">Manage Students</h1>
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentModal"><i class="bi bi-plus-lg me-2"></i>Add Student</button>
+      <h1 class="h3 fw-bold mb-0">Student List</h1>
+      <a class="btn btn-primary" href="/admin/students/register"><i class="bi bi-fingerprint me-2"></i>Register Student</a>
     </div>
-    <div class="alert alert-info"><i class="bi bi-info-circle me-2"></i>Use image paths like <code>/images/student-placeholder.svg</code> for this local prototype.</div>
+    <% if (studentMessage) { %>
+      <div class="alert alert-success"><i class="bi bi-check-circle me-2"></i><%= studentMessage %></div>
+    <% } %>
+    <% if (studentError) { %>
+      <div class="alert alert-danger"><i class="bi bi-exclamation-triangle me-2"></i><%= studentError %></div>
+    <% } %>
     <div class="card border-0 shadow-sm">
       <div class="table-responsive">
         <table class="table table-hover align-middle mb-0">
@@ -30,7 +35,6 @@
       </div>
     </div>
 
-    <%- include("student-form", { modalId: "studentModal", student: null }) %>
     <% students.forEach((student) => { %>
       <%- include("student-form", { modalId: `editStudent${student.id}`, student }) %>
     <% }) %>

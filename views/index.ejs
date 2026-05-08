@@ -1,6 +1,6 @@
 <%- include("partials/head", { title }) %>
 <main class="kiosk-shell container-fluid min-vh-100 p-3 p-xl-4">
-  <div class="kiosk-header d-flex align-items-center justify-content-between mb-3">
+  <div class="kiosk-header d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center gap-3">
       <img src="/images/iwatar-logo.png" class="kiosk-logo" alt="IWATAR logo">
       <div>
@@ -11,7 +11,7 @@
     <span class="badge text-bg-primary fs-6"><i class="bi bi-wifi me-1"></i>Local Network</span>
   </div>
 
-  <section class="announcement-card card border-0 shadow-sm mb-3">
+  <section class="announcement-card card border-0 shadow-sm">
     <div class="card-body py-3">
       <div class="d-flex gap-3 align-items-center">
         <span class="announcement-badge badge"><i class="bi bi-megaphone-fill me-1"></i>Today</span>
@@ -29,45 +29,56 @@
   </section>
 
   <div class="row g-3 kiosk-grid">
-    <aside class="col-lg-3">
+    <aside class="col-lg-4">
       <div class="card h-100 border-0 shadow-sm student-panel">
-        <div class="card-body text-center">
-          <img src="<%= student ? student.photo : '/images/student-placeholder.svg' %>" class="student-photo mb-3" alt="Student photo">
-          <h2 class="h4 fw-bold mb-1"><%= student ? `${student.first_name} ${student.last_name}` : "No student selected" %></h2>
-          <div class="text-secondary mb-3">LRN: <%= student ? student.lrn : "-----" %></div>
-          <div class="d-flex justify-content-center gap-2 flex-wrap">
-            <span class="badge text-bg-primary"><%= student ? student.grade_level : "Grade" %></span>
-            <span class="badge text-bg-light border"><%= student ? student.section : "Section" %></span>
-          </div>
+        <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
+          <% if (student) { %>
+            <img src="<%= student.photo %>" class="student-photo mb-3" alt="Student photo">
+            <h2 class="h4 fw-bold mb-1"><%= `${student.first_name} ${student.last_name}` %></h2>
+            <div class="text-secondary mb-3">LRN: <%= student.lrn %></div>
+            <div class="student-badges d-flex justify-content-center gap-2 flex-wrap">
+              <span class="badge text-bg-primary"><%= student.grade_level %></span>
+              <span class="badge text-bg-light border"><%= student.section %></span>
+            </div>
+          <% } else { %>
+            <div class="scan-waiting-photo mb-3">
+              <i class="bi bi-fingerprint"></i>
+            </div>
+            <h2 class="h4 fw-bold mb-1">Waiting to scan</h2>
+            <div class="text-secondary mb-3">Place finger on scanner</div>
+            <div class="student-badges d-flex justify-content-center gap-2 flex-wrap">
+              <span class="badge text-bg-secondary">No student selected</span>
+            </div>
+          <% } %>
         </div>
       </div>
     </aside>
 
-    <section class="col-lg-6">
+    <section class="col-lg-5">
       <div class="card h-100 border-0 shadow-sm">
         <div class="card-body p-4">
           <div class="d-flex align-items-center justify-content-between mb-4">
             <h2 class="h5 fw-bold mb-0"><i class="bi bi-person-vcard me-2 text-primary"></i>Student Information</h2>
-            <span class="badge text-bg-success">Ready for scan</span>
+            <span class="badge <%= student ? "text-bg-success" : "text-bg-secondary" %>"><%= student ? "Student loaded" : "Waiting for scan" %></span>
           </div>
 
           <div class="row g-3 mb-4">
             <div class="col-md-6">
               <div class="info-tile">
                 <span>Guardian</span>
-                <strong><%= student ? student.guardian_name : "N/A" %></strong>
+                <strong><%= student ? student.guardian_name : "Waiting for scan" %></strong>
               </div>
             </div>
             <div class="col-md-6">
               <div class="info-tile">
                 <span>Contact</span>
-                <strong><%= student ? student.contact_number : "N/A" %></strong>
+                <strong><%= student ? student.contact_number : "Waiting for scan" %></strong>
               </div>
             </div>
             <div class="col-12">
               <div class="info-tile">
                 <span>Address</span>
-                <strong><%= student ? student.address : "N/A" %></strong>
+                <strong><%= student ? student.address : "Waiting for scan" %></strong>
               </div>
             </div>
           </div>
@@ -129,8 +140,8 @@
     </aside>
   </div>
 
-  <div class="d-flex justify-content-between align-items-center mt-3">
-    <span class="text-secondary"><i class="bi bi-shield-check me-1"></i>Local-only prototype. No QR scanning.</span>
+  <div class="kiosk-footer d-flex justify-content-between align-items-center">
+    <span class="text-secondary"><i class="bi bi-shield-check me-1"></i>Local-only prototype.</span>
     <a href="/admin/login" class="btn btn-primary"><i class="bi bi-lock-fill me-2"></i>Admin Login</a>
   </div>
 </main>

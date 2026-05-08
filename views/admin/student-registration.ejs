@@ -1,0 +1,73 @@
+<%- include("../partials/head", { title }) %>
+<div class="admin-layout">
+  <%- include("../partials/admin-sidebar") %>
+  <main class="admin-main p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h1 class="h3 fw-bold mb-1">Register Student</h1>
+        <p class="text-secondary mb-0">Add the student profile and register the fingerprint ID before saving.</p>
+      </div>
+      <a class="btn btn-outline-primary" href="/admin/students"><i class="bi bi-arrow-left me-2"></i>Student List</a>
+    </div>
+
+    <form class="card border-0 shadow-sm" action="/admin/students/save" method="post" enctype="multipart/form-data">
+      <div class="card-header bg-white fw-bold">
+        <i class="bi bi-person-plus me-2 text-primary"></i>Student Details
+      </div>
+      <div class="card-body row g-3">
+        <div class="col-md-4">
+          <label class="form-label">LRN</label>
+          <input class="form-control" name="lrn" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">First Name</label>
+          <input class="form-control" name="first_name" required>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Last Name</label>
+          <input class="form-control" name="last_name" required>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Grade</label>
+          <input class="form-control" name="grade_level">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Section</label>
+          <input class="form-control" name="section">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Student Photo</label>
+          <input class="form-control" name="student_photo" type="file" accept="image/*">
+          <div class="form-text">Upload JPG, PNG, or another image file. Max 5 MB.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Fingerprint ID</label>
+          <div class="input-group">
+            <input class="form-control" name="fingerprint_id" readonly>
+            <button class="btn btn-outline-primary js-register-fingerprint" type="button">
+              <i class="bi bi-fingerprint me-1"></i>Register Fingerprint
+            </button>
+          </div>
+          <div class="form-text js-fingerprint-status">Click Register Fingerprint, then save the student.</div>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Guardian</label>
+          <input class="form-control" name="guardian_name">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Contact Number</label>
+          <input class="form-control" name="contact_number">
+        </div>
+        <div class="col-12">
+          <label class="form-label">Address</label>
+          <textarea class="form-control" name="address"></textarea>
+        </div>
+      </div>
+      <div class="card-footer bg-white d-flex justify-content-end gap-2">
+        <a class="btn btn-light" href="/admin/students">Cancel</a>
+        <button class="btn btn-primary"><i class="bi bi-save me-2"></i>Save Student</button>
+      </div>
+    </form>
+  </main>
+</div>
+<%- include("../partials/scripts") %>

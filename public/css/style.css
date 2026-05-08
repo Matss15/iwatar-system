@@ -20,15 +20,19 @@ body {
 .kiosk-shell {
   background:
     linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .kiosk-header {
   background: linear-gradient(90deg, #2f353b 0%, #2f353b 58%, #d71920 100%);
   color: #fff;
   border-radius: 8px;
-  padding: 14px 16px;
+  padding: 10px 14px;
   box-shadow: 0 0.75rem 1.75rem rgba(47, 53, 59, 0.16);
   border-bottom: 4px solid #d71920;
+  flex: 0 0 auto;
 }
 
 .kiosk-header .text-secondary {
@@ -36,21 +40,39 @@ body {
 }
 
 .kiosk-grid {
-  min-height: calc(100vh - 190px);
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .student-photo {
-  width: min(220px, 65%);
+  width: min(300px, 78%);
   aspect-ratio: 1;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   border-radius: 20px;
   border: 6px solid var(--iwatar-soft);
   background: #fff;
+  padding: 6px;
+}
+
+.scan-waiting-photo {
+  width: min(300px, 78%);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  border: 6px solid var(--iwatar-soft);
+  background: #fff;
+  color: rgba(215, 25, 32, 0.72);
+}
+
+.scan-waiting-photo i {
+  font-size: clamp(5rem, 10vw, 8rem);
 }
 
 .kiosk-logo {
-  width: 72px;
-  height: 72px;
+  width: 58px;
+  height: 58px;
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid #fff;
@@ -61,10 +83,21 @@ body {
   background: linear-gradient(180deg, #ffffff, #fff1f2);
 }
 
+.student-badges .badge {
+  font-size: 1rem;
+  padding: 0.55rem 0.85rem;
+}
+
 .announcement-card {
   border-left: 7px solid #d71920 !important;
   background: linear-gradient(90deg, #fff0f1 0%, #ffffff 48%, #fff8f8 100%);
   box-shadow: 0 0.75rem 1.6rem rgba(215, 25, 32, 0.16) !important;
+  flex: 0 0 auto;
+}
+
+.announcement-card .card-body {
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
 }
 
 .announcement-strip {
@@ -126,8 +159,45 @@ body {
 }
 
 .recent-log-list {
-  max-height: 260px;
+  max-height: 200px;
   overflow: auto;
+}
+
+.kiosk-footer {
+  flex: 0 0 auto;
+}
+
+.kiosk-footer .btn {
+  min-width: 160px;
+}
+
+@media (min-width: 992px) {
+  .kiosk-shell {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .kiosk-grid > aside,
+  .kiosk-grid > section {
+    min-height: 0;
+  }
+
+  .kiosk-grid .card {
+    min-height: 0;
+  }
+
+  .kiosk-grid > aside:last-child > .d-grid {
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .kiosk-grid > aside:last-child .card {
+    overflow: hidden;
+  }
+
+  .kiosk-grid > aside:last-child .list-group {
+    overflow: auto;
+  }
 }
 
 .login-page {

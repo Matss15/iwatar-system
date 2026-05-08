@@ -48,7 +48,7 @@ async function update(id, data) {
       field(data.section),
       field(data.grade_level),
       field(data.photo || data.current_photo, "/images/student-placeholder.svg"),
-      field(data.fingerprint_id),
+      field(data.fingerprint_id || data.current_fingerprint_id),
       field(data.guardian_name),
       field(data.contact_number),
       field(data.address),
@@ -62,4 +62,9 @@ async function remove(id) {
   return db.query("DELETE FROM students WHERE id = ?", [id]);
 }
 
-module.exports = { getAll, getById, create, update, remove };
+async function updateFingerprintId(id, fingerprintId) {
+  await db.query("UPDATE students SET fingerprint_id = ? WHERE id = ?", [fingerprintId, id]);
+  return getById(id);
+}
+
+module.exports = { getAll, getById, create, update, remove, updateFingerprintId };

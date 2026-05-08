@@ -7,9 +7,11 @@ async function status() {
 }
 
 async function enroll(studentId) {
+  const enrollmentKey = String(studentId || "new").replace(/[^a-zA-Z0-9-]/g, "-").toLowerCase();
+
   return {
-    student_id: Number(studentId),
-    fingerprint_id: `mock-${studentId}-${Date.now()}`,
+    student_id: Number(studentId) || null,
+    fingerprint_id: `mock-${enrollmentKey}-${Date.now()}`,
     mode: "mock",
   };
 }

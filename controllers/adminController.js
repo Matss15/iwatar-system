@@ -8,6 +8,7 @@ const Admin = require("../models/adminModel");
 const ReportSettings = require("../models/reportSettingsModel");
 const ReportService = require("../services/reportService");
 const Totp = require("../utils/totp");
+const fingerprint = require("../hardware/fingerprint");
 
 const GOOGLE_OAUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -240,10 +241,21 @@ async function studentsPage(req, res, next) {
       title: "Manage Students",
       admin: req.session.admin,
       students: await Student.getAll(),
+      studentMessage: req.session.studentMessage || null,
+      studentError: req.session.studentError || null,
     });
+    delete req.session.studentMessage;
+    delete req.session.studentError;
   } catch (error) {
     next(error);
   }
+}
+
+function studentRegistrationPage(req, res) {
+  res.render("admin/student-registration", {
+    title: "Register Student",
+    admin: req.session.admin,
+  });
 }
 
 async function saveStudent(req, res, next) {
@@ -268,6 +280,35 @@ async function deleteStudent(req, res, next) {
   try {
     await Student.remove(req.params.id);
     res.redirect("/admin/students");
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function enrollStudentFingerprint(req, res, next) {
+  try {
+    const student = await Student.getById(req.params.id);
+
+    if (!student) {
+      req.session.studentError = "Student not found.";
+      return res.redirect("/admin/students");
+    }
+
+    const enrollment = await fingerprint.enroll(student.id);
+    await Student.updateFingerprintId(student.id, enrollment.fingerprint_id);
+
+    req.session.studentMessage = `Fingerprint registered for ${student.first_name} ${student.last_name}.`;
+    res.redirect("/admin/students");
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function enrollFingerprintForForm(req, res, next) {
+  try {
+    const enrollmentKey = req.body.student_id || req.body.lrn || "new-student";
+    const enrollment = await fingerprint.enroll(enrollmentKey);
+    res.status(201).json(enrollment);
   } catch (error) {
     next(error);
   }
@@ -434,8 +475,11 @@ module.exports = {
   logout,
   dashboard,
   studentsPage,
+  studentRegistrationPage,
   saveStudent,
   deleteStudent,
+  enrollStudentFingerprint,
+  enrollFingerprintForForm,
   announcementsPage,
   saveAnnouncement,
   deleteAnnouncement,
